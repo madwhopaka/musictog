@@ -1,0 +1,124 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+ 
+ 
+ .out {
+   display: "flex" ; 
+   flex-direction: row;
+   justify-content: center;
+ }
+
+
+
+h2 {
+  color: rgb(90, 106, 248);
+  align-self: center;
+  text-align: center;
+}
+
+.card_container {
+ 
+  display:flex; 
+  justify-content:center;
+  align-items:center
+}
+.card {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 20px;
+  padding-left:20px ;
+  padding-bottom :20px ;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: white;
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.textfield {
+  width: 300px !important;
+  height: 2px !important;
+  color:"white" !important; 
+}
+
+.username-container {
+  display: "flex";
+  flex-direction: "column" ;
+  margin-top: 10px;
+  
+}
+
+.formhead {
+  margin: 5px ;
+  margin-left: 40px ;
+  color:rgb(212, 211, 211);
+}
+
+.row {
+  display: flex;
+}
+
+.button { 
+  display: flex;
+  font-size: 15px ;
+  width: auto ;
+  border: 1px black;
+  border-radius: 30px;
+  color: white;
+  align-items: center;
+  justify-content: start;
+  padding:10px 20px;
+  height:40px;
+  font-family: 'Poppins', sans-serif ;
+  transition: 0.5s ; 
+  background-color: #1fd1f9;
+  background: linear-gradient(to right, #121742 0%, #03217b 79%);
+    
+}   
+
+.button:hover {
+  color : white;
+  background-color: #a4508b;
+background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+
+ 
+}
+
+.logo{
+  
+  border-radius: 20px;
+  margin-right: 10px;
+  padding: 5px;
+  background-color: #1fd1f9;
+  background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+}
+
+
+.slash-page-card {
+  font-family: 'Poppins', sans-serif;
+  font-size:20px;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+  height: 50vh;
+  width: 50vw ;
+  color: white ;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(79, 94, 121, 0.75);
+}
