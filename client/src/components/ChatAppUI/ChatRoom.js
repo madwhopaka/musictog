@@ -1,10 +1,9 @@
 import React, {useState ,useEffect } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
+import AppBar from "@mui/material/AppBar";
 import "./chatui.css";
 import chatIcon from "./assets/chat-icon.png";
 import io from 'socket.io-client' ; 
-import {TextField} from '@material-ui/core'
+import {TextField, Container} from '@material-ui/core'
 
 var message_arr = [] ;
 
@@ -90,13 +89,13 @@ export const ChatRoom = () => {
         <React.Fragment>
            <Container style = {{display: "flex" , justifyContent :"right", float: "right" , width: 600, flexDirection: "column", alignItems: "center"}}>
             <Container>
-            <Navbar
+            <AppBar
                 
                 className="navbar-out"
                
                
             >
-                <Navbar.Brand href="#home" className="navbar-items">
+               
                     <img
                         alt=""
                         src={chatIcon}
@@ -104,9 +103,9 @@ export const ChatRoom = () => {
                         height="30"
                         className="d-inline-block align-top"
                     />
-                </Navbar.Brand>
+                
                 VPlay Chat
-            </Navbar>
+            </AppBar>
             </Container>
             <Container className = "cont">
                 <div className= "message-area">

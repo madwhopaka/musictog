@@ -1,34 +1,36 @@
-const express = require("express");
-const cors = require("cors");
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
-const { getAuth, getUser, createCustomToken } = require('firebase-admin/auth');
+import express from 'express' ; 
+import cors from 'cors' ; 
 
-const serviceAccount = require('./key.json');
+
+import {initializeApp, applicationDefault, cert} from  'firebase-admin/app' ; 
+import { getFirestore, Timestamp, FieldValue }  from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
+import { generateRoomCode } from "./newroom.js";
+
+
+ const serviceAccount = require('./key.json');
 
 
 const app = express();
-const PORT = 4000;
+ const PORT = 4000;
 
-app.use(cors());
-app.use(express.json());
-
-
-initializeApp({
-  credential: cert(serviceAccount)
-});
-
-const db = getFirestore()
+ app.use(cors());
+ app.use(express.json());
 
 
+  initializeApp({
+   credential: cert(serviceAccount)  });
 
-app.post("/api/signup", (req, res) => {
-  console.log(req.body);
+ const db = getFirestore()
+
+
+
+ app.post("/api/signup", (req, res) => {
+   console.log(req.body);
   
 
-    
-    res.send({"status" : "ok"});
-  })
+        res.send({"status" : "ok"});
+      })
 
   app.post("/api/login", (req, res) => {
   
@@ -104,6 +106,17 @@ app.post("/api/signup", (req, res) => {
     
 })
 
+
+
+app.post("/api/createroom", (req,res)=>{
+ var roomCode = generateRoomCode(10) ;
+ console.log(roomCode) ; 
+ console.log(req.body) ;
+ var code  = {
+   "code" :roomCode, 
+ }
+ res.json(code);
+}); 
 
 
 

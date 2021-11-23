@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import fire, { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "../fire.js";
-import { BrowserRouter as Router, Switch, Route ,Link, useHistory} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route ,Link, useNavigate} from 'react-router-dom';
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore';
 import {Login} from "./Login.js";
@@ -22,12 +22,8 @@ import {handleGoogleSignUp} from "./firebaseFn/googleSignIn";
 import './form.css'; 
 
 
-const StyledTextField = styled(TextField)`
-   & .Mui-disabled .MuiOutlinedInput-notchedOutline{
-     border-color: orange ;
-   }
-  
-`
+
+
 
 
 const firestore = firebase.firestore();
@@ -38,9 +34,7 @@ const firestore = firebase.firestore();
 
 export const SignUp = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [email, setEmail] = useState();
-    // const [password, setPassword] = useState();
-    const history = useHistory();
+    const history = useNavigate();
 
     console.log('logged in?', isLoggedIn);
 
@@ -56,7 +50,7 @@ export const SignUp = () => {
 
     function signOut() {
         getAuth().signOut();
-        history.push('/')
+        history('/');
        
     }
 
@@ -67,9 +61,7 @@ export const SignUp = () => {
 
     return (
         <div>
-            <Router>
-                    <Switch>
-                        <Route exact path="/signup">
+         
                             {!isLoggedIn ? (
                                 <SignUpComp />
                             ) : (
@@ -80,15 +72,7 @@ export const SignUp = () => {
                                 </span>
                                 </h1>
                             )}
-                        </Route>
-                        <Route exact path = "/login">
-                          <Login />
-                        </Route>
-                        <Route path="/signup">
-                            <SignUp />
-                        </Route>
-                    </Switch>
-            </Router>
+                     
         </div>       
     );    
 }
@@ -181,7 +165,7 @@ const formValidation = yup.object({
       validationSchema: formValidation,
     });
 
-    const history = useHistory();
+    const history = useNavigate();
     function routeChange() {
       history.push('../')
     }

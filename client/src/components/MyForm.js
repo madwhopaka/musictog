@@ -4,10 +4,10 @@ import "./form.css";
 import {Login} from './Login.js';
 import {SignUp} from  './SignUp.js'
 import fire, { getAuth, onAuthStateChanged} from "../fire.js";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router,Routes,  Route } from 'react-router-dom';
 import parse from "html-react-parser" ;
 import "./form.css";
-import {Home} from './mainpage';
+import {Home} from './MainPage';
 
 
 export const MyForm = () => {
@@ -34,7 +34,7 @@ export const MyForm = () => {
  
        
           <Router>
-                                <Switch>
+                                <Routes>
                                     <Route exact path="/">
                                         {!isLoggedIn ? (
                                            <Login />
@@ -47,7 +47,7 @@ export const MyForm = () => {
                                     <Route path="/signup">
                                         <SignUp />
                                     </Route>
-                                </Switch>  
+                                </Routes>  
                         </Router>
         
   );

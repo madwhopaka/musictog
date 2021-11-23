@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useCallback } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route ,Link, useNavigate} from 'react-router-dom';
 import fire, { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, firebaseConfig } from "../fire.js";
 import {onAuthStateChanged } from "../fire.js";
 import firebase from 'firebase/compat/app'
@@ -20,7 +20,8 @@ import glogo from './glogo.png';
 import { handleGoogleLogin } from './firebaseFn/googleSignIn.js'
 import { withStyles } from "@material-ui/core/styles";
 import './form.css';
-import {Home} from './mainpage';
+import {Home} from './MainPage';
+import {SignUp} from './SignUp' ;
 
 
 
@@ -51,6 +52,7 @@ const handleSubmit = async (userRes, e) => {
 
       addData();
       const user = userCredential.user;
+
       console.log(user.email);
       console.log(user.uid);
       // ...
@@ -93,8 +95,72 @@ const formValidation = yup.object({
 
 
 
+
+
 export const Login = (props) => {
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
+  const nav = useNavigate();
+
+  console.log('logged in?', isLoggedIn);
+var usr ;
+ onAuthStateChanged(getAuth(), async (user) =>{
+      if (user) {
+       usr = user ;
+      setIsLoggedIn(true) }
+  });
+
+
+  useEffect(() => {
+    console.log("Here 1!!!!")
+    usr?setIsLoggedIn(true):setIsLoggedIn(false) ;
+    isLoggedIn? nav('../home'): console.log("Hello me") ;
+
+  }, [isLoggedIn])
+
+  function signOut() {
+      getAuth().signOut();
+      nav('/');
+     
+  }
+
+
+ 
+  return (
+   <div>   {!isLoggedIn ? (
+    <LoginComp />
+) : (
+ <h1>
+ Your are signed in
+ <span onClick={signOut}>
+     <a href="#">Sign out</a>
+ </span>
+ </h1>
+)}
+      
+                 
+
+   </div>       
+ );    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const LoginComp = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [text, setText] = useState("");
@@ -102,6 +168,7 @@ export const Login = (props) => {
   const auth = getAuth() ; 
   var isLoggedin = false ;
   var userr ; 
+  const nav = useNavigate();
 
 
   const formik = useFormik({
@@ -118,106 +185,113 @@ export const Login = (props) => {
   });
 
  
- 
-
-  
-  
-  
-
 
 
   return (
-  isLoggedIn?<Home user = {userr}/>:  <Container xs = {12} md = {12} sm = {12}  style={{
-    display:"flex", justifyContent:"center",
-  }}>
-  <Container style = {{display:"flex", flexDirection:"column",justifyContent:"start", alignItems:"center", height:"80vh", width: "30vw",
- boxShadow : "0 8px 32px 0 rgba(31, 38, 135, 0.50)", backgroundColor: "rgba(255, 255, 255, 0.17)", backdropFilter: "blur(8.5px)", borderRadius:10, border: "2px solid grey"  }}>
-   <form onSubmit={formik.handleSubmit}>
-  <Grid xs = {12} sm = {12} md = {12} lg = {12} style = {{ width: "100%" , display:"flex", flexDirection: "column", alignItems: "center",  justifyContent: "center",}}>
-  
    
-  <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-</style>
-
- 
-   <Grid item lg ={6} md = {12} sm = {12} xs = {12}  style = {{ width: "100%" , justifyContent: "center", textAlign: "center",  alignItems: "center"}}>
-   <img src= {logo} height="80"   style = {{ marginLeft:0 , marginBottom: 15}} />
-   
+      <Container xs = {12} md = {12} sm = {12}  style={{
+        display:"flex", justifyContent:"center",
+      }}>
+      <Container style = {{display:"flex", flexDirection:"column",justifyContent:"start", alignItems:"center", height:"80vh", width: "30vw",
+     boxShadow : "0 8px 32px 0 rgba(31, 38, 135, 0.50)", backgroundColor: "rgba(255, 255, 255, 0.17)", backdropFilter: "blur(8.5px)", borderRadius:10, border: "2px solid grey"  }}>
+       <form onSubmit={formik.handleSubmit}>
+      <Grid xs = {12} sm = {12} md = {12} lg = {12} style = {{ width: "100%" , display:"flex", flexDirection: "column", alignItems: "center",  justifyContent: "center",}}>
       
-      </Grid>
-      <p style = {{color: "white", fontFamily: `'Poppins', sans-serif`, fontSize: 25, margin:0, marginBottom:20 }} >Login</p>  
+       
+      <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    </style>
     
-    <div className="username-container">
-      <p  className = "formhead" style = {{color: "rgb(212, 211, 211)", fontFamily: `'Poppins', sans-serif`,   fontSize: 15}}>Username or Email  *</p>
-      <div className = "row">
-      <LoginIcon  className= "logo"/>
-      <TextField
-        width = "100%"
-        name="email"
-        variant="outlined"
-        onChange={formik.handleChange}
-        inputLabelProps = {{style: {margin:0, fontSize: 10}}}
-        inputProps = {{className: "textfield", style :{color: "white", width: "300px ", outline:"none !important"}}} 
-        helperText = "Enter a username"
-        value={formik.values.email}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        helperText={formik.touched.email && formik.errors.email}
-      />
+     
+       <Grid item lg ={6} md = {12} sm = {12} xs = {12}  style = {{ width: "100%" , justifyContent: "center", textAlign: "center",  alignItems: "center"}}>
+       <img src= {logo} height="80"   style = {{ marginLeft:0 , marginBottom: 15}} />
+       
+          
+          </Grid>
+          <p style = {{color: "white", fontFamily: `'Poppins', sans-serif`, fontSize: 25, margin:0, marginBottom:20 }} >Login</p>  
+        
+        <div className="username-container">
+          <p  className = "formhead" style = {{color: "rgb(212, 211, 211)", fontFamily: `'Poppins', sans-serif`,   fontSize: 15}}>Username or Email  *</p>
+          <div className = "row">
+          <LoginIcon  className= "logo"/>
+          <TextField
+            width = "100%"
+            name="email"
+            variant="outlined"
+            onChange={formik.handleChange}
+            inputLabelProps = {{style: {margin:0, fontSize: 10}}}
+            inputProps = {{className: "textfield", style :{color: "white", width: "300px ", outline:"none !important"}}} 
+            helperText = "Enter a username"
+            value={formik.values.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+          </div>
+        </div>
+       
+    
+        <div className="username-container">
+          <p  className = "formhead" style = {{color: "rgb(212, 211, 211)", fontFamily: `'Poppins', sans-serif`,   fontSize: 15}}>Password*</p>
+          <div className = "row">   
+           <Lock className="logo" />   
+           <TextField
+            name="pass"   
+            variant="outlined"
+            onChange={formik.handleChange}
+            inputLabelProps = {{style: {margin:0, fontSize: 10}}}
+            inputProps = {{className: "textfield", style :{color: "white", width: "300px"}}} 
+            value={formik.values.pass}
+            error={formik.touched.pass && Boolean(formik.errors.pass)}
+            helperText={formik.touched.pass && formik.errors.pass}
+          />
+          </div>
+          <p style = {{color: "white" , fontSize: 12, float: "right" ,fontFamily: `'Poppins' , sans-serif`}}>Don't have an account? <u ><Link style = {{color: "yellow"}} to="/signup">Signup</Link></u ></p>
+        </div>
+    
+        <button style={{marginTop:10}} className ='button' type="submit"> 
+          Get the Party Started  
+        </button>
+    
+    
+      <div style = {{display:"flex"}}>
+      
+      <p style = {{display:"flex", color:"rgb(212, 211, 211)", fontSize:20 ,fontFamily: `'Poppins', sans-serif`}}>OR</p>
+    
       </div>
-    </div>
-   
-
-    <div className="username-container">
-      <p  className = "formhead" style = {{color: "rgb(212, 211, 211)", fontFamily: `'Poppins', sans-serif`,   fontSize: 15}}>Password*</p>
-      <div className = "row">   
-       <Lock className="logo" />   
-       <TextField
-        name="pass"   
-        variant="outlined"
-        onChange={formik.handleChange}
-        inputLabelProps = {{style: {margin:0, fontSize: 10}}}
-        inputProps = {{className: "textfield", style :{color: "white", width: "300px"}}} 
-        value={formik.values.pass}
-        error={formik.touched.pass && Boolean(formik.errors.pass)}
-        helperText={formik.touched.pass && formik.errors.pass}
-      />
-      </div>
-      <p style = {{color: "white" , fontSize: 12, float: "right" ,fontFamily: `'Poppins' , sans-serif`}}>Don't have an account? <u ><Link style = {{color: "yellow"}} to="/signup">Signup</Link></u ></p>
-    </div>
-
-    <button style={{marginTop:10}} className ='button' type="submit"> 
-      Get the Party Started  
+    
+    
+      
+     
+      </Grid>
+      </form>
+      <button onClick={ async ()=>  { var user = handleGoogleLogin();
+     }} className = 'button'>
+    <img src= {glogo} height="25px" width= "25px" />
+    Login with Google
     </button>
-
-
-  <div style = {{display:"flex"}}>
+    
+    </Container >
+      </Container>
+    
+    
+    
+    
+    
+    
+      )
   
-  <p style = {{display:"flex", color:"rgb(212, 211, 211)", fontSize:20 ,fontFamily: `'Poppins', sans-serif`}}>OR</p>
-
-  </div>
-
-
-  
- 
-  </Grid>
-  </form>
-  <button onClick={ async ()=>  { var user = handleGoogleLogin();
-   await user?props.history.push('../home'):console.log("login failed")}} className = 'button'>
-<img src= {glogo} height="25px" width= "25px" />
-Login with Google
-</button>
-
-</Container >
-  </Container>
-
-
-
-
-
-
-  )
 }
+
+
+
+
+
+
+
+
+
+
+
 
 const MainContainer  = styled.div `
 display: flex ; 
