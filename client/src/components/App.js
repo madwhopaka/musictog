@@ -9,7 +9,7 @@ import { Home } from './MainPage.js'
 import { LandingPage } from './LandingPage';
 import { Login } from './Login'
 import { SignUp } from './SignUp';
-import {ChatRoom} from './ChatAppUI/ChatRoom.js';
+// import {ChatRoom} from './ChatAppUI/ChatRoom.js';
 
 function App() {
 // var userr;
@@ -38,7 +38,8 @@ function App() {
 
 
   return (<Container style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-       <LandingPage /> 
+       {/* <ChatRoom />  */}
+       <LandingPage />
       
   </Container>);
 

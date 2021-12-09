@@ -13,12 +13,10 @@ function generateRoomCode(length) {
 }
 
 
-var random_code = generateRoomCode() ; 
-console.log(random_code) ;
 
 
 function generateQRcode (){
     
 }
 
-export {generateRoomCode} ;
+module.exports =  {generateRoomCode} ;
